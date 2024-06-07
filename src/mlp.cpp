@@ -1,9 +1,3 @@
-/* In this project I shall write a neural net in C++
-    * The neural net will be a multi-layer perceptron
-    * The neural net will be trained using backpropagation
-    * The neural net will be trained using stochastic gradient descent
-*/
-
 #include <iostream>
 #include "layers.cpp"
 #include <vector>
