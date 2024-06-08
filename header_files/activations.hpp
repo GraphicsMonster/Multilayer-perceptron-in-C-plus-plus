@@ -7,53 +7,67 @@
 #include <algorithm>
 #include <string>
 
-std::vector<double> RELU(std::vector<double> a){
-    for(int i = 0; i<a.size(); i++){
-        a[i] = std::max(0.0, a[i]);
+std::vector<std::vector<double>> RELU(const std::vector<std::vector<double>>& a){
+    std::vector<std::vector<double>> result(a.size(), std::vector<double>(a[0].size()));
+    for(int i = 0; i < a.size(); i++){
+        for(int j = 0; j < a[0].size(); j++){
+            result[i][j] = std::max(0.0, a[i][j]);
+        }
     }
 
-    return a;
+    return result;
 }
 
-std::vector<double> Sigmoid(std::vector<double> a){
-    for(int i = 0; i<a.size(); i++){
-        a[i] = 1/(1+exp(-a[i]));
+std::vector<std::vector<double>> Sigmoid(const std::vector<std::vector<double>>& a){
+    std::vector<std::vector<double>> result(a.size(), std::vector<double>(a[0].size()));
+    for(int i = 0; i < a.size(); i++){
+        for(int j = 0; j < a[0].size(); j++){
+            result[i][j] = 1/(1+exp(-a[i][j]));
+        }
     }
 
-    return a;
+    return result;
 }
 
-std::vector<double> Tanh(std::vector<double> a){
-    for(int i = 0; i<a.size(); i++){
-        a[i] = tanh(a[i]);
+std::vector<std::vector<double>> Tanh(const std::vector<std::vector<double>>& a){
+    std::vector<std::vector<double>> result(a.size(), std::vector<double>(a[0].size()));
+    for(int i = 0; i < a.size(); i++){
+        for(int j = 0; j < a[0].size(); j++){
+            result[i][j] = tanh(a[i][j]);
+        }
     }
 
-    return a;
+    return result;
 }
 
-std::vector<double> Softmax(std::vector<double> a){
-    double sum = 0;
-    for(int i = 0; i<a.size(); i++){
-        a[i] = exp(a[i]);
-        sum += a[i];
+std::vector<std::vector<double>> Softmax(const std::vector<std::vector<double>>& a){
+    std::vector<std::vector<double>> result(a.size(), std::vector<double>(a[0].size()));
+    for(int i = 0; i < a.size(); i++){
+        double sum = 0;
+        for(int j = 0; j < a[0].size(); j++){
+            result[i][j] = exp(a[i][j]);
+            sum += result[i][j];
+        }
+        for(int j = 0; j < a[0].size(); j++){
+            result[i][j] = result[i][j]/sum;
+        }
     }
 
-    for(int i = 0; i<a.size(); i++){
-        a[i] = a[i]/sum;
-    }
-
-    return a;
+    return result;
 }
 
-std::vector<double> LeakyRELU(std::vector<double> a, double alpha){
-    for(int i = 0; i<a.size(); i++){
-        a[i] = std::max(alpha*a[i], a[i]);
+std::vector<std::vector<double>> LeakyRELU(const std::vector<std::vector<double>>& a, double alpha){
+    std::vector<std::vector<double>> result(a.size(), std::vector<double>(a[0].size()));
+    for(int i = 0; i < a.size(); i++){
+        for(int j = 0; j < a[0].size(); j++){
+            result[i][j] = std::max(alpha*a[i][j], a[i][j]);
+        }
     }
 
-    return a;
+    return result;
 }
 
-std::vector<double> applyActivation(std::vector<double> data, std::string activation)
+std::vector<std::vector<double>> applyActivation(const std::vector<std::vector<double>>& data, std::string activation)
 {
     if(activation == "RELU")
     {
@@ -87,47 +101,62 @@ std::vector<double> applyActivation(std::vector<double> data, std::string activa
 
 // Now let us write the derivatives of these activation functions
 
-std::vector<double> RELU_derivative(std::vector<double> a){
-    for(int i = 0; i<a.size(); i++){
-        a[i] = a[i] > 0 ? 1 : 0;
+std::vector<std::vector<double>> RELU_derivative(const std::vector<std::vector<double>>& a){
+    std::vector<std::vector<double>> result(a.size(), std::vector<double>(a[0].size()));
+    for(int i = 0; i < a.size(); i++){
+        for(int j = 0; j < a[0].size(); j++){
+            result[i][j] = a[i][j] > 0 ? 1 : 0;
+        }
     }
 
-    return a;
+    return result;
 }
 
-std::vector<double> Sigmoid_derivative(std::vector<double> a){
-    for(int i = 0; i<a.size(); i++){
-        a[i] = a[i] * (1 - a[i]);
+std::vector<std::vector<double>> Sigmoid_derivative(const std::vector<std::vector<double>>& a){
+    std::vector<std::vector<double>> result(a.size(), std::vector<double>(a[0].size()));
+    for(int i = 0; i < a.size(); i++){
+        for(int j = 0; j < a[0].size(); j++){
+            result[i][j] = a[i][j] * (1 - a[i][j]);
+        }
     }
 
-    return a;
+    return result;
 }
 
-std::vector<double> Tanh_derivative(std::vector<double> a){
-    for(int i = 0; i<a.size(); i++){
-        a[i] = 1 - pow(a[i], 2);
+std::vector<std::vector<double>> Tanh_derivative(const std::vector<std::vector<double>>& a){
+    std::vector<std::vector<double>> result(a.size(), std::vector<double>(a[0].size()));
+    for(int i = 0; i < a.size(); i++){
+        for(int j = 0; j < a[0].size(); j++){
+            result[i][j] = 1 - pow(a[i][j], 2);
+        }
     }
 
-    return a;
+    return result;
 }
 
-std::vector<double> Softmax_derivative(std::vector<double> a){
-    for(int i = 0; i<a.size(); i++){
-        a[i] = a[i] * (1 - a[i]);
+std::vector<std::vector<double>> Softmax_derivative(const std::vector<std::vector<double>>& a){
+    std::vector<std::vector<double>> result(a.size(), std::vector<double>(a[0].size()));
+    for(int i = 0; i < a.size(); i++){
+        for(int j = 0; j < a[0].size(); j++){
+            result[i][j] = a[i][j] * (1 - a[i][j]);
+        }
     }
 
-    return a;
+    return result;
 }
 
-std::vector<double> LeakyRELU_derivative(std::vector<double> a, double alpha){
-    for(int i = 0; i<a.size(); i++){
-        a[i] = a[i] > 0 ? 1 : alpha;
+std::vector<std::vector<double>> LeakyRELU_derivative(const std::vector<std::vector<double>>& a, double alpha){
+    std::vector<std::vector<double>> result(a.size(), std::vector<double>(a[0].size()));
+    for(int i = 0; i < a.size(); i++){
+        for(int j = 0; j < a[0].size(); j++){
+            result[i][j] = a[i][j] > 0 ? 1 : alpha;
+        }
     }
 
-    return a;
+    return result;
 }
 
-std::vector<double> applyActivation_derivative(std::vector<double> data, std::string activation)
+std::vector<std::vector<double>> applyActivation_derivative(const std::vector<std::vector<double>>& data, std::string activation)
 {
     if(activation == "RELU")
     {
