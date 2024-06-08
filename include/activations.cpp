@@ -100,7 +100,7 @@ std::vector<std::vector<double>> RELU_derivative(const std::vector<std::vector<d
     std::vector<std::vector<double>> result(a.size(), std::vector<double>(a[0].size()));
     for(int i = 0; i < a.size(); i++){
         for(int j = 0; j < a[0].size(); j++){
-            result[i][j] = a[i][j] > 0 ? 1 : 0;
+            result[i][j] = (a[i][j] > 0) ? 1.0 : 0.0;
         }
     }
 

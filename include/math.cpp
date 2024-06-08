@@ -1,4 +1,6 @@
 #include "math.hpp"
+#include <random>
+#include <iostream>
 
 std::vector<std::vector<double>> Multiply_matrices(const std::vector<std::vector<double>>& A, const std::vector<std::vector<double>>& B) {
     if (A[0].size() != B.size()) {
@@ -73,13 +75,89 @@ std::vector<double> Add_vectors(std::vector<double> data, std::vector<double> bi
     return data;
 }
 
-std::vector<std::vector<double>> Add_biases(std::vector<std::vector<double>>& data, std::vector<double>& biases)
-{
-    for(int i = 0; i<data.size(); i++){
-        for(int j = 0; data[0].size(); j++){
-                data[j][i] += biases[j];
+std::vector<std::vector<double>> Add_biases(const std::vector<std::vector<double>>& matrix, const std::vector<double>& biases) {
+    if (matrix.empty() || biases.empty() || matrix[0].size() != biases.size()) {
+        throw std::invalid_argument("Matrix and biases dimensions do not match.");
+    }
+
+    std::vector<std::vector<double>> result = matrix;
+
+    for (size_t i = 0; i < result.size(); ++i) {
+        for (size_t j = 0; j < result[0].size(); ++j) {
+            result[i][j] += biases[j];
         }
     }
 
-    return data;
+    return result;
+}
+
+
+
+double getRandomDouble(double min, double max) {
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_real_distribution<> dis(min, max);
+    return dis(gen);
+}
+
+// Function to initialize the matrix with random values
+std::vector<std::vector<double>> initializeMatrix(int rows, int cols, double min, double max) {
+    std::vector<std::vector<double>> matrix(rows, std::vector<double>(cols));
+    
+    for(int i = 0; i < rows; ++i) {
+        for(int j = 0; j < cols; ++j) {
+            matrix[i][j] = getRandomDouble(min, max);
+        }
+    }
+
+    return matrix;
+}
+
+std::vector<double> initializeBias(int size, double min, double max) {
+    std::vector<double> bias(size);
+    
+    for(int i = 0; i < size; ++i) {
+        bias[i] = getRandomDouble(min, max);
+    }
+
+    return bias;
+}
+
+// Function to print the matrix
+void printMatrix(const std::vector<std::vector<double>>& matrix) {
+    for(const auto& row : matrix) {
+        for(const auto& val : row) {
+            std::cout << val << " ";
+        }
+        std::cout << std::endl;
+    }
+}
+
+
+std::vector<std::vector<double>> transposeMatrix(const std::vector<std::vector<double>>& matrix) {
+    if (matrix.empty()) return {}; // Return an empty matrix if input is empty
+
+    int rows = matrix.size();
+    int cols = matrix[0].size();
+    std::vector<std::vector<double>> transposedMatrix(cols, std::vector<double>(rows));
+
+    for (int i = 0; i < rows; ++i) {
+        for (int j = 0; j < cols; ++j) {
+            transposedMatrix[j][i] = matrix[i][j];
+        }
+    }
+
+    return transposedMatrix;
+}
+
+std::vector<std::vector<double>> hammard(const std::vector<std::vector<double>>& matrix1, const std::vector<std::vector<double>>& matrix2) {
+    std::vector<std::vector<double>> result(matrix1.size(), std::vector<double>(matrix2[0].size()));
+
+    for(int i = 0; i<matrix1.size(); i++){
+        for(int j = 0; j<matrix2[0].size(); j++){
+            result[i][j] = matrix1[i][j] * matrix2[i][j];
+        }  
+    }
+
+    return result;
 }
