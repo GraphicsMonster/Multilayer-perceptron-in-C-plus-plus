@@ -19,17 +19,34 @@ int main(){
     vector<vector<double>> x = {{0.0, 0.0}, {0.0, 1.0}, {1.0, 0.0}, {1.0, 1.0}};
     vector<double> y = {0.0, 1.0, 1.0, 0.0};
 
-    model.train(1000, 0.03, x, y);
+    model.train(10000, 0.03, x, y);
 
-    vector<vector<double>> test_set_x = {{1.0, 1.0}, {1.0, 1.0}, {0.0, 1.0}};
-    vector<double> test_set_y = {0, 0, 1};
+    vector<vector<double>> test_set_x = {{1.0, 1.0}, {1.0, 0.0}, {0.0, 1.0}, {0.0, 0.0}};
+    vector<double> test_set_y = {0, 1, 1, 0};
 
     // Evaluation
     vector<vector<double>> output = model.forward(test_set_x);
 
-    for(int i = 0; i<output.size(); i++){
-        cout<< "Here are the outputs: " << output[i][0] <<"\n";
+    cout << "Test set: {";
+    for(int i = 0; i < test_set_x.size(); i++){
+        cout << "{";
+        for(int j = 0; j<test_set_x[0].size(); j++){
+            cout << test_set_x[i][j] << ", ";
+        }
+        cout << "}";
     }
+    cout << "} \n";
+
+    cout << "Generated set: {";
+
+    for(int i = 0; i<output.size(); i++){
+        cout << output[i][0] << ", ";
+    }
+
+    cout << "}";
 
     return 0;
 }
+
+// XOR training set -- Works perfectly fine.
+// Image recognition -- Working on it.
