@@ -18,9 +18,9 @@ std::vector<std::vector<double>> Add_biases(const std::vector<std::vector<double
 
 double getRandomDouble(double min, double max);
 
-std::vector<std::vector<double>> initializeMatrix(int rows, int cols, double min=-0.1, double max=0.1);
+std::vector<std::vector<double>> initializeMatrix(int rows, int cols);
 
-std::vector<double> initializeBias(int size, double min, double max);
+std::vector<double> initializeBias(int size);
 
 void printMatrix(const std::vector<std::vector<double>>& matrix);
 
@@ -29,5 +29,7 @@ std::vector<std::vector<double>> transposeMatrix(const std::vector<std::vector<d
 std::vector<std::vector<double>> hammard(const std::vector<std::vector<double>>& matrix1, const std::vector<std::vector<double>>& matrix2);
 
 std::vector<double> calculate_bias_derivatives(const std::vector<std::vector<double>>& dldz);
+
+double getXavierValue(int input_dim, int output_dim);
 
 #endif

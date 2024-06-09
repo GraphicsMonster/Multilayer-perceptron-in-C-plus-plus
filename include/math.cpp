@@ -2,6 +2,12 @@
 #include <random>
 #include <iostream>
 
+
+// Global random number generator and distribution
+std::random_device rd;
+std::mt19937 gen(rd());
+std::uniform_real_distribution<> dis(-0.1, 0.1);
+
 std::vector<std::vector<double>> Multiply_matrices(const std::vector<std::vector<double>>& A, const std::vector<std::vector<double>>& B) {
     if (A[0].size() != B.size()) {
         throw std::invalid_argument("The number of columns in the first matrix must be equal to the number of rows in the second matrix.");
@@ -93,31 +99,33 @@ std::vector<std::vector<double>> Add_biases(const std::vector<std::vector<double
 
 
 
-double getRandomDouble(double min, double max) {
-    std::random_device rd;
-    std::mt19937 gen(rd());
-    std::uniform_real_distribution<> dis(min, max);
+double getRandomDouble() {
     return dis(gen);
 }
 
-// Function to initialize the matrix with random values
-std::vector<std::vector<double>> initializeMatrix(int rows, int cols, double min, double max) {
+double getXavierValue(int input_dim, int output_dim) {
+    std::normal_distribution<> d(0, std::sqrt(2.0 / (input_dim + output_dim)));
+    return d(gen);
+}
+
+// Function to initialize the matrix with Xavier initialization
+std::vector<std::vector<double>> initializeMatrix(int rows, int cols) {
     std::vector<std::vector<double>> matrix(rows, std::vector<double>(cols));
     
     for(int i = 0; i < rows; ++i) {
         for(int j = 0; j < cols; ++j) {
-            matrix[i][j] = getRandomDouble(min, max);
+            matrix[i][j] = getXavierValue(rows, cols);
         }
     }
 
     return matrix;
 }
 
-std::vector<double> initializeBias(int size, double min, double max) {
+std::vector<double> initializeBias(int size) {
     std::vector<double> bias(size);
     
     for(int i = 0; i < size; ++i) {
-        bias[i] = getRandomDouble(min, max);
+        bias[i] = getXavierValue(1, size);
     }
 
     return bias;
