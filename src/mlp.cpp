@@ -83,7 +83,7 @@ class MLP
                 this->backpass(y);
                 double loss = this->get_loss(preds, y);;
 
-                if((epoch+1) % 10 == 0){
+                if((epoch+1) % 100 == 0){
                     cout << "Epoch: " << (epoch+1) << " || Loss: " << loss << "\n";
                 }
             }

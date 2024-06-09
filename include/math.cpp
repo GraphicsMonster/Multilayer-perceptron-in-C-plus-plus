@@ -158,7 +158,7 @@ std::vector<std::vector<double>> transposeMatrix(const std::vector<std::vector<d
     return transposedMatrix;
 }
 
-std::vector<std::vector<double>> hammard(const std::vector<std::vector<double>>& matrix1, const std::vector<std::vector<double>>& matrix2) {
+std::vector<std::vector<double>> hadamard(const std::vector<std::vector<double>>& matrix1, const std::vector<std::vector<double>>& matrix2) {
     std::vector<std::vector<double>> result(matrix1.size(), std::vector<double>(matrix2[0].size()));
 
     for(int i = 0; i<matrix1.size(); i++){

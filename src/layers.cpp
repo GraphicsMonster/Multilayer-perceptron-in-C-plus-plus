@@ -46,7 +46,7 @@ class FCLayer
         vector<vector<double>> backprop(vector<vector<double>> dlda){
 
             vector<vector<double>> activated_derivative = applyActivation_derivative(this->raw, this->activation);
-            vector<vector<double>> dldz = hammard(transposeMatrix(dlda), activated_derivative);
+            vector<vector<double>> dldz = hadamard(transposeMatrix(dlda), activated_derivative);
 
             this->weight_der = transposeMatrix(Multiply_matrices(transposeMatrix(dldz), this->input_data));
             this->bias_der = calculate_bias_derivatives(dldz);
