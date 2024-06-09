@@ -28,4 +28,6 @@ std::vector<std::vector<double>> transposeMatrix(const std::vector<std::vector<d
 
 std::vector<std::vector<double>> hammard(const std::vector<std::vector<double>>& matrix1, const std::vector<std::vector<double>>& matrix2);
 
+std::vector<double> calculate_bias_derivatives(const std::vector<std::vector<double>>& dldz);
+
 #endif

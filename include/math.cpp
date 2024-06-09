@@ -129,7 +129,7 @@ void printMatrix(const std::vector<std::vector<double>>& matrix) {
         for(const auto& val : row) {
             std::cout << val << " ";
         }
-        std::cout << std::endl;
+        std::cout << "\n \n";
     }
 }
 
@@ -160,4 +160,20 @@ std::vector<std::vector<double>> hammard(const std::vector<std::vector<double>>&
     }
 
     return result;
+}
+
+std::vector<double> calculate_bias_derivatives(const std::vector<std::vector<double>>& dldz) {
+    // Number of neurons (columns) in dldz
+    int num_neurons = dldz[0].size();
+    // Initialize bias_der vector with zeros
+    std::vector<double> bias_der(num_neurons, 0.0);
+    
+    // Sum the gradients for each neuron across all samples in the batch
+    for (int i = 0; i < dldz.size(); ++i) { // Iterate over rows (samples)
+        for (int j = 0; j < num_neurons; ++j) { // Iterate over columns (neurons)
+            bias_der[j] += dldz[i][j];
+        }
+    }
+    
+    return bias_der;
 }
