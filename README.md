@@ -1,8 +1,10 @@
 # A feedforward Neural network written from scratch in C++.
 
-To once again strengthen my hold over C++ and to keep the weekend busy, I decided to write a feedforward neural network from scratch mimicking the implementation strategies we usually employ in Python, except using C++. This is a simple implementation and is not optimized for performance. The model consists of 2 hidden layers and 1 output layer. To test the network, I trained it on the XOR problem and had it predict the output for the same. The network was able to predict the output with 100% accuracy. The code is written in a way that it can be easily extended to include more hidden layers and neurons.
+To, once again, strengthen my hold over C++ and to keep the weekend busy, I decided to write a feedforward neural network from scratch mimicking the implementation strategies we usually employ in Python, except using C++. This is a simple implementation and is not optimized for performance. The model consists of 2 hidden layers and 1 output layer. To test the network, I trained it on the XOR problem and had it predict the output for the same. The network was able to predict the output with 100% accuracy. The code is written in a way that it can be easily extended to include more hidden layers and neurons.
 
-![XOR Problem predictions]("xor_set_results.png")
+<p align="center">
+  <img src="https://github.com/waldyr/Sublime-Installer/blob/master/sublime_text.png?raw=true" alt="Sublime's custom image"/>
+</p>
 
 To further extend the testing of the network, one can easily make some modifications in the hyperparameters such that the dimensions fo the input and the weights align. The network can then be trained on any desired dataset and will likely produce good results. 
 
