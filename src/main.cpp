@@ -5,14 +5,21 @@ using namespace std;
 
 int main(){
 
-    // Instantiating the model
-    MLP model = MLP();
+    // Hyperparams
+    int input_dim = 2;
+    int num_neurons = 14;
+    int output_dim = 1;
+    double lr = 0.01;
+    string activation = "Tanh";
 
-    // generating the XOR set to tarin it on
+    // Instantiating the model
+    MLP model = MLP(input_dim, num_neurons, output_dim, lr, activation);
+
+    // generating the XOR set to trainn it on
     vector<vector<double>> x = {{0.0, 0.0}, {0.0, 1.0}, {1.0, 0.0}, {1.0, 1.0}};
     vector<double> y = {0.0, 1.0, 1.0, 0.0};
 
-    model.train(100, 0.001, x, y);
+    model.train(1000, 0.03, x, y);
 
     vector<vector<double>> test_set_x = {{1.0, 1.0}, {1.0, 1.0}, {0.0, 1.0}};
     vector<double> test_set_y = {0, 0, 1};

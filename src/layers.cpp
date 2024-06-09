@@ -70,5 +70,5 @@ class FCLayer
 
 };
 
-// TODO: My weight initialization sucks. NOt enough randomness. Fix it after lunch.
-// TODO: Maybe use some standard initialization technique like xavier or whatever.
+// TODO: My weight initialization sucks. NOt enough randomness. Fix it after lunch. -- Done
+// TODO: Maybe use some standard initialization technique like xavier or whatever. -- Done

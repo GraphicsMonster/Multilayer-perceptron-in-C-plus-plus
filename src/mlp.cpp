@@ -6,12 +6,27 @@
 class MLP 
 {
     private:
-        FCLayer fc1 = FCLayer(2, 24, "RELU");
-        FCLayer fc2 = FCLayer(24, 24, "RELU");
-        FCLayer fc3 = FCLayer(24, 1, "None");
-        double learning_rate = 0.001;
+        int input_dim, num_neurons, output_dim;
+        string activations;
+        FCLayer fc1;
+        FCLayer fc2;
+        FCLayer fc3;
+        double learning_rate;
 
     public:
+
+        MLP(int input_dim, int num_neurons, int output_dim, double learning_rate, string activations)
+        {
+            this->input_dim = input_dim;
+            this->num_neurons = num_neurons;
+            this->output_dim = output_dim;
+            this->learning_rate = learning_rate;
+            this->activations = activations;
+
+            this->fc1 = FCLayer(input_dim, num_neurons, "RELU");
+            this->fc2 = FCLayer(num_neurons, num_neurons, "RELU");
+            this->fc3 = FCLayer(num_neurons, output_dim, "None");
+        }
 
         vector<vector<double>> forward(vector<vector<double>> x)
         {
@@ -45,25 +60,15 @@ class MLP
 
             double loss = this->get_loss(preds, true_vals);
 
-            cout << "Loss right now: " << loss << " -- Works up until here. \n"; // debugging step -- Works
-
             for(int i = 0; i<preds.size(); i++){
                 dlda[0][i] = (2 * (preds[i][0] - true_vals[i]))/preds.size();
             }
 
-            cout << "Printing dlda here: \n";
-
-            printMatrix(dlda); // debugging step -- Works
-
             // Initiating backpass
             vector<vector<double>>third_grad = this->fc3.backprop(dlda);
-            cout << "Printing the gradients returned from fc3: \n";
-            printMatrix(third_grad); // debugging step
             this->fc3.update_params(this->learning_rate);
 
             vector<vector<double>>second_grad = this->fc2.backprop(transposeMatrix(third_grad));
-            cout << "Printing the gradients returned from fc2: \n";
-            printMatrix(third_grad); // debugging step
             this->fc2.update_params(learning_rate);
 
             vector<vector<double>> first_grad = this->fc1.backprop(transposeMatrix(second_grad));
@@ -75,12 +80,11 @@ class MLP
 
             for(int epoch = 0; epoch<num_epochs; epoch++){
                 vector<vector<double>> preds = this->forward(x);
-                cout << "Number of columns in the predictions: " << preds[0].size() << "\n"; // Debugging step
                 this->backpass(y);
                 double loss = this->get_loss(preds, y);;
 
-                if((epoch+1) % 100 == 0){
-                    cout << "Epoch: " << epoch << " || Loss: " << loss << "\n";
+                if((epoch+1) % 10 == 0){
+                    cout << "Epoch: " << (epoch+1) << " || Loss: " << loss << "\n";
                 }
             }
         }
